@@ -41,9 +41,14 @@ public class WingsItem extends Item implements Equipable {
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
         if (entity instanceof LocalPlayer localPlayer) {
             if (slotId == 38) {
+                Vec3 playerDelta = entity.getDeltaMovement();
                 if (localPlayer.input.jumping && remainingFlightTime > 0) {
                     entity.moveRelative(0.1f, new Vec3(0, 1, 0));
                     remainingFlightTime -= 1.0f;
+                } else if (localPlayer.input.jumping && playerDelta.y < 0) {
+                    //entity.moveRelative(0.05f, new Vec3(0, 1, 0));
+
+                    entity.setDeltaMovement(playerDelta.x,-0.2,playerDelta.z );
                 }
 
                 if (localPlayer.onGround()) {
