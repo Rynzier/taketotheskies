@@ -1,6 +1,7 @@
 package com.rynzier.taketotheskies.item.custom;
 
 
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.chat.OutgoingChatMessage;
 import net.minecraft.network.chat.PlayerChatMessage;
@@ -35,9 +36,12 @@ public class WingsItem extends Item implements Equipable {
 
     @Override
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
-        if (entity instanceof Player player) {
+        if (entity instanceof LocalPlayer localPlayer) {
             if (slotId == 38) {
-                entity.moveRelative(0.1f, new Vec3(0, 1, 0));
+                localPlayer.resetFallDistance();
+                if (localPlayer.input.jumping) {
+                    entity.moveRelative(0.1f, new Vec3(0, 1, 0));
+                }
             }
         }
     }
