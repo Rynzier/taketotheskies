@@ -5,6 +5,7 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.chat.OutgoingChatMessage;
 import net.minecraft.network.chat.PlayerChatMessage;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
@@ -13,11 +14,13 @@ import net.minecraft.world.phys.Vec3;
 
 
 public class WingsItem extends Item implements Equipable {
+    public float flightTime;
+    public float remainingFlightTime;
 
-
-    public WingsItem(EquipmentSlot itemSlot, Properties properties) {
-
+    public WingsItem(float flightDuration, EquipmentSlot itemSlot, Properties properties) {
         super(properties);
+        flightTime = flightDuration;
+        remainingFlightTime = flightDuration;
     }
 
 
@@ -38,10 +41,20 @@ public class WingsItem extends Item implements Equipable {
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
         if (entity instanceof LocalPlayer localPlayer) {
             if (slotId == 38) {
-                localPlayer.resetFallDistance();
-                if (localPlayer.input.jumping) {
+                if (localPlayer.input.jumping && remainingFlightTime > 0) {
                     entity.moveRelative(0.1f, new Vec3(0, 1, 0));
+                    remainingFlightTime -= 1.0f;
                 }
+
+                if (localPlayer.onGround()) {
+                    remainingFlightTime = flightTime;
+                }
+            }
+        }
+
+        if (entity instanceof Player player) {
+            if (!level.isClientSide()) {
+                player.fallDistance = 0.0f;
             }
         }
     }
