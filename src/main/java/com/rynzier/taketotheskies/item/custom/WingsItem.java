@@ -16,11 +16,15 @@ import net.minecraft.world.phys.Vec3;
 public class WingsItem extends Item implements Equipable {
     public float flightTime;
     public float remainingFlightTime;
+    public float flightSpeed;
+    public float glideStrength;
 
-    public WingsItem(float flightDuration, EquipmentSlot itemSlot, Properties properties) {
+    public WingsItem(float flySpeed, float glidePower, float flightDuration, EquipmentSlot itemSlot, Properties properties) {
         super(properties);
         flightTime = flightDuration;
         remainingFlightTime = flightDuration;
+        flightSpeed = flySpeed;
+        glideStrength = glidePower;
     }
 
 
@@ -43,12 +47,12 @@ public class WingsItem extends Item implements Equipable {
             if (slotId == 38) {
                 Vec3 playerDelta = entity.getDeltaMovement();
                 if (localPlayer.input.jumping && remainingFlightTime > 0) {
-                    entity.moveRelative(0.1f, new Vec3(0, 1, 0));
+                    entity.moveRelative(flightSpeed, new Vec3(0, 1, 0));
                     remainingFlightTime -= 1.0f;
-                } else if (localPlayer.input.jumping && playerDelta.y < 0) {
+                } else if (localPlayer.input.jumping && playerDelta.y < -glideStrength) {
                     //entity.moveRelative(0.05f, new Vec3(0, 1, 0));
 
-                    entity.setDeltaMovement(playerDelta.x,-0.2,playerDelta.z );
+                    entity.setDeltaMovement(playerDelta.x,-glideStrength,playerDelta.z );
                 }
 
                 if (localPlayer.onGround()) {

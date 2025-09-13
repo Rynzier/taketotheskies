@@ -14,7 +14,7 @@ public class ModItems {
 
     // Register items here
     public static final DeferredItem<WingsItem> TEST_WINGS = ITEMS.register("test_wings",
-            () -> new WingsItem(15.0f, EquipmentSlot.BODY, new WingsItem.Properties()));
+            () -> new WingsItem(0.1f, 0.2f, 15.0f, EquipmentSlot.BODY, new WingsItem.Properties()));
 
 
     public static void register(IEventBus eventBus) {
