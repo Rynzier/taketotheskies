@@ -1,6 +1,19 @@
 package com.rynzier.taketotheskies;
 
 import com.rynzier.taketotheskies.item.ModItems;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.ChatType;
+import net.minecraft.network.chat.OutgoingChatMessage;
+import net.minecraft.network.chat.PlayerChatMessage;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.neoforged.neoforge.client.event.InputEvent;
+import net.neoforged.neoforge.event.entity.living.LivingEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -62,4 +75,16 @@ public class TakeToTheSkies {
         // Do something when the server starts
         LOGGER.info("HELLO from server starting");
     }
+    /*
+    private static void onPlayerJump(InputEvent.InteractionKeyMappingTriggered event) {
+        LivingEntity entity = event.getEntity();
+        if (entity.getType() == EntityType.PLAYER) {
+            var test = entity.getItemBySlot(EquipmentSlot.CHEST);
+            Player p_test = Minecraft.getInstance().player;
+            if (p_test != null) {
+                p_test.createCommandSourceStack().sendChatMessage(new OutgoingChatMessage.Player(PlayerChatMessage.unsigned(p_test.getUUID(), "test")), false, ChatType.bind(ChatType.CHAT, p_test));
+            }
+        }
+    }
+    */
 }
