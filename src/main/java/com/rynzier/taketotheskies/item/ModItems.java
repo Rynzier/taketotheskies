@@ -2,19 +2,25 @@ package com.rynzier.taketotheskies.item;
 
 import com.rynzier.taketotheskies.TakeToTheSkies;
 import com.rynzier.taketotheskies.item.custom.WingsItem;
+import net.minecraft.client.model.Model;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(TakeToTheSkies.MODID);
 
+    public ResourceLocation test2 = ResourceLocation.fromNamespaceAndPath("taketotheskies", "item/test_wings");
+
     // Register items here
     public static final DeferredItem<WingsItem> TEST_WINGS = ITEMS.register("test_wings",
-            () -> new WingsItem(0.1f, 0.2f, 15.0f, EquipmentSlot.BODY, new WingsItem.Properties()));
+            () -> new WingsItem(0.1f, 0.1f, 0.2f, 15.0f, EquipmentSlot.BODY, new WingsItem.Properties()));
 
 
     public static void register(IEventBus eventBus) {

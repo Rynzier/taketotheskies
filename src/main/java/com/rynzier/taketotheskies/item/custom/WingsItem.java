@@ -4,6 +4,7 @@ package com.rynzier.taketotheskies.item.custom;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
+import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.chat.OutgoingChatMessage;
 import net.minecraft.network.chat.PlayerChatMessage;
@@ -20,13 +21,15 @@ public class WingsItem extends Item implements Equipable {
     public float remainingFlightTime;
     public float flightSpeed;
     public float glideStrength;
+    public BakedModel wingModel;
 
-    public WingsItem(float flySpeed, float glidePower, float flightDuration, EquipmentSlot itemSlot, Properties properties) {
+    public WingsItem(BakedModel inModel, float flySpeed, float glidePower, float flightDuration, EquipmentSlot itemSlot, Properties properties) {
         super(properties);
         flightTime = flightDuration;
         remainingFlightTime = flightDuration;
         flightSpeed = flySpeed;
         glideStrength = glidePower;
+        wingModel = inModel;
     }
 
 
