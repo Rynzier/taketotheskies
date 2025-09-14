@@ -1,16 +1,19 @@
 package com.rynzier.taketotheskies;
 
 import com.rynzier.taketotheskies.item.ModItems;
+import com.rynzier.taketotheskies.render.WingsLayer;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.ChatType;
-import net.minecraft.network.chat.OutgoingChatMessage;
-import net.minecraft.network.chat.PlayerChatMessage;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
@@ -48,6 +51,7 @@ public class TakeToTheSkies {
         // Note that this is necessary if and only if we want *this* class (TaketotheSkies) to respond directly to events.
         // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
         NeoForge.EVENT_BUS.register(this);
+        NeoForge.EVENT_BUS.addListener(TakeToTheSkies::onAddLayers);
 
         ModItems.register(modEventBus);
 
@@ -59,7 +63,6 @@ public class TakeToTheSkies {
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
-
     }
 
     // Add the example block item to the building blocks tab
@@ -74,6 +77,15 @@ public class TakeToTheSkies {
     public void onServerStarting(ServerStartingEvent event) {
         // Do something when the server starts
         LOGGER.info("HELLO from server starting");
+    }
+
+    public static void onAddLayers(EntityRenderersEvent.AddLayers renderEvent) {
+        for (PlayerSkin.Model skin : renderEvent.getSkins()) {
+            var renderer = renderEvent.getSkin(skin);
+            if (renderer instanceof PlayerRenderer pRenderer) {
+                pRenderer.addLayer(new WingsLayer(pRenderer));
+            }
+        }
     }
     /*
     private static void onPlayerJump(InputEvent.InteractionKeyMappingTriggered event) {

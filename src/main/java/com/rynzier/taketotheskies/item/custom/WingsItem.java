@@ -1,7 +1,9 @@
 package com.rynzier.taketotheskies.item.custom;
 
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.chat.OutgoingChatMessage;
 import net.minecraft.network.chat.PlayerChatMessage;
@@ -67,4 +69,6 @@ public class WingsItem extends Item implements Equipable {
             }
         }
     }
+
+
 }
