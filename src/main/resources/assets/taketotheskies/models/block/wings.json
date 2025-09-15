@@ -1,0 +1,11 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "north": "taketotheskies:block/wings",
+    "west": "taketotheskies:block/wings",
+    "east": "taketotheskies:block/wings",
+    "south": "taketotheskies:block/wings",
+    "up": "taketotheskies:block/wings",
+    "down": "taketotheskies:block/wings"
+  }
+}

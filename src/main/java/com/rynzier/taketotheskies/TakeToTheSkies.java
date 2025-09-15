@@ -91,12 +91,11 @@ public class TakeToTheSkies {
     }
 
     public void registerAdditional(ModelEvent.RegisterAdditional event) {
-        ModelResourceLocation wingsModel = new ModelResourceLocation(
+        WingsLayer.wingsModelLocation = new ModelResourceLocation(
             ResourceLocation.fromNamespaceAndPath(MODID, "block/wings"),
             "standalone"
         );
-        event.register(wingsModel);
-        WingsLayer.wingsModel = Minecraft.getInstance().getModelManager().getModel(wingsModel);
+        event.register(WingsLayer.wingsModelLocation);
     }
 
     /*

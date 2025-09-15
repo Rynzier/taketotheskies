@@ -16,6 +16,7 @@ import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -25,20 +26,23 @@ import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class WingsLayer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
-
-    public static BakedModel wingsModel;
+    public static ModelResourceLocation wingsModelLocation;
+    private BakedModel wingsModel;
 
     public WingsLayer(LivingEntityRenderer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> renderer) {
         super(renderer);
+        this.wingsModel = Minecraft.getInstance().getModelManager().getModel(wingsModelLocation);
     }
 
     @Override
     public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int packedLight, AbstractClientPlayer abstractClientPlayer,
         float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch
     ) {
-        Minecraft.getInstance().getBlockRenderer().getModelRenderer().renderModel(
-            poseStack.last(), multiBufferSource.getBuffer(RenderType.cutout()), null, wingsModel, 1.0f, 1.0f, 1.0f, packedLight, OverlayTexture.NO_OVERLAY
-        );
+        if (wingsModel != null) {
+            Minecraft.getInstance().getBlockRenderer().getModelRenderer().renderModel(
+                poseStack.last(), multiBufferSource.getBuffer(RenderType.cutout()), null, wingsModel, 1.0f, 1.0f, 1.0f, packedLight, OverlayTexture.NO_OVERLAY
+            );
+        }
     }
 
 }
