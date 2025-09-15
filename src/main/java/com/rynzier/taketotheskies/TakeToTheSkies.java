@@ -7,6 +7,8 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.resources.PlayerSkin;
+import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.EntityType;
@@ -15,6 +17,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.InputEvent;
+import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import org.slf4j.Logger;
@@ -50,11 +53,12 @@ public class TakeToTheSkies {
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (TaketotheSkies) to respond directly to events.
         // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
-        NeoForge.EVENT_BUS.register(this);
-        NeoForge.EVENT_BUS.addListener(TakeToTheSkies::onAddLayers);
+        NeoForge.EVENT_BUS.addListener(this::onServerStarting);
 
         ModItems.register(modEventBus);
 
+        modEventBus.addListener(this::addLayers);
+        modEventBus.addListener(this::registerAdditional);
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
 
@@ -72,14 +76,12 @@ public class TakeToTheSkies {
         }
     }
 
-    // You can use SubscribeEvent and let the Event Bus discover methods to call
-    @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
         // Do something when the server starts
         LOGGER.info("HELLO from server starting");
     }
 
-    public static void onAddLayers(EntityRenderersEvent.AddLayers renderEvent) {
+    public void addLayers(EntityRenderersEvent.AddLayers renderEvent) {
         for (PlayerSkin.Model skin : renderEvent.getSkins()) {
             var renderer = renderEvent.getSkin(skin);
             if (renderer instanceof PlayerRenderer pRenderer) {
@@ -87,6 +89,16 @@ public class TakeToTheSkies {
             }
         }
     }
+
+    public void registerAdditional(ModelEvent.RegisterAdditional event) {
+        ModelResourceLocation wingsModel = new ModelResourceLocation(
+            ResourceLocation.fromNamespaceAndPath(MODID, "block/wings"),
+            "standalone"
+        );
+        event.register(wingsModel);
+        WingsLayer.wingsModel = Minecraft.getInstance().getModelManager().getModel(wingsModel);
+    }
+
     /*
     private static void onPlayerJump(InputEvent.InteractionKeyMappingTriggered event) {
         LivingEntity entity = event.getEntity();

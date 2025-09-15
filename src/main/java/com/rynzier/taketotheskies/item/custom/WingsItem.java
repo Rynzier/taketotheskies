@@ -21,15 +21,13 @@ public class WingsItem extends Item implements Equipable {
     public float remainingFlightTime;
     public float flightSpeed;
     public float glideStrength;
-    public BakedModel wingModel;
 
-    public WingsItem(BakedModel inModel, float flySpeed, float glidePower, float flightDuration, EquipmentSlot itemSlot, Properties properties) {
+    public WingsItem(float flySpeed, float glidePower, float flightDuration, EquipmentSlot itemSlot, Properties properties) {
         super(properties);
         flightTime = flightDuration;
         remainingFlightTime = flightDuration;
         flightSpeed = flySpeed;
         glideStrength = glidePower;
-        wingModel = inModel;
     }
 
 
