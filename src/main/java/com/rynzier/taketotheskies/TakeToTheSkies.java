@@ -83,7 +83,7 @@ public class TakeToTheSkies {
         for (PlayerSkin.Model skin : renderEvent.getSkins()) {
             var renderer = renderEvent.getSkin(skin);
             if (renderer instanceof PlayerRenderer pRenderer) {
-                pRenderer.addLayer(new WingsLayer(pRenderer));
+                pRenderer.addLayer(new WingsLayer(pRenderer, renderEvent.getEntityModels()));
             }
         }
     }

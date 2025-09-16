@@ -8,6 +8,7 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.chat.OutgoingChatMessage;
 import net.minecraft.network.chat.PlayerChatMessage;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
@@ -21,9 +22,9 @@ public class WingsItem extends Item implements Equipable {
     public float remainingFlightTime;
     public float flightSpeed;
     public float glideStrength;
-    public BakedModel wingModel;
+    public ResourceLocation wingModel;
 
-    public WingsItem(BakedModel inModel, float flySpeed, float glidePower, float flightDuration, EquipmentSlot itemSlot, Properties properties) {
+    public WingsItem(ResourceLocation inModel, float flySpeed, float glidePower, float flightDuration, EquipmentSlot itemSlot, Properties properties) {
         super(properties);
         flightTime = flightDuration;
         remainingFlightTime = flightDuration;
